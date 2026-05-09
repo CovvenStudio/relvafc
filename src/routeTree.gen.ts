@@ -9,38 +9,134 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PrecosRouteImport } from './routes/precos'
+import { Route as DescobrirRouteImport } from './routes/descobrir'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JogadorIdRouteImport } from './routes/jogador.$id'
+import { Route as DashboardScoutRouteImport } from './routes/dashboard.scout'
+import { Route as DashboardJogadorRouteImport } from './routes/dashboard.jogador'
+import { Route as ClubeIdRouteImport } from './routes/clube.$id'
 
+const PrecosRoute = PrecosRouteImport.update({
+  id: '/precos',
+  path: '/precos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DescobrirRoute = DescobrirRouteImport.update({
+  id: '/descobrir',
+  path: '/descobrir',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JogadorIdRoute = JogadorIdRouteImport.update({
+  id: '/jogador/$id',
+  path: '/jogador/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardScoutRoute = DashboardScoutRouteImport.update({
+  id: '/dashboard/scout',
+  path: '/dashboard/scout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardJogadorRoute = DashboardJogadorRouteImport.update({
+  id: '/dashboard/jogador',
+  path: '/dashboard/jogador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClubeIdRoute = ClubeIdRouteImport.update({
+  id: '/clube/$id',
+  path: '/clube/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/precos': typeof PrecosRoute
+  '/clube/$id': typeof ClubeIdRoute
+  '/dashboard/jogador': typeof DashboardJogadorRoute
+  '/dashboard/scout': typeof DashboardScoutRoute
+  '/jogador/$id': typeof JogadorIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/precos': typeof PrecosRoute
+  '/clube/$id': typeof ClubeIdRoute
+  '/dashboard/jogador': typeof DashboardJogadorRoute
+  '/dashboard/scout': typeof DashboardScoutRoute
+  '/jogador/$id': typeof JogadorIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/precos': typeof PrecosRoute
+  '/clube/$id': typeof ClubeIdRoute
+  '/dashboard/jogador': typeof DashboardJogadorRoute
+  '/dashboard/scout': typeof DashboardScoutRoute
+  '/jogador/$id': typeof JogadorIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/descobrir'
+    | '/precos'
+    | '/clube/$id'
+    | '/dashboard/jogador'
+    | '/dashboard/scout'
+    | '/jogador/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/descobrir'
+    | '/precos'
+    | '/clube/$id'
+    | '/dashboard/jogador'
+    | '/dashboard/scout'
+    | '/jogador/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/descobrir'
+    | '/precos'
+    | '/clube/$id'
+    | '/dashboard/jogador'
+    | '/dashboard/scout'
+    | '/jogador/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DescobrirRoute: typeof DescobrirRoute
+  PrecosRoute: typeof PrecosRoute
+  ClubeIdRoute: typeof ClubeIdRoute
+  DashboardJogadorRoute: typeof DashboardJogadorRoute
+  DashboardScoutRoute: typeof DashboardScoutRoute
+  JogadorIdRoute: typeof JogadorIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/precos': {
+      id: '/precos'
+      path: '/precos'
+      fullPath: '/precos'
+      preLoaderRoute: typeof PrecosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/descobrir': {
+      id: '/descobrir'
+      path: '/descobrir'
+      fullPath: '/descobrir'
+      preLoaderRoute: typeof DescobrirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +144,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jogador/$id': {
+      id: '/jogador/$id'
+      path: '/jogador/$id'
+      fullPath: '/jogador/$id'
+      preLoaderRoute: typeof JogadorIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/scout': {
+      id: '/dashboard/scout'
+      path: '/dashboard/scout'
+      fullPath: '/dashboard/scout'
+      preLoaderRoute: typeof DashboardScoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/jogador': {
+      id: '/dashboard/jogador'
+      path: '/dashboard/jogador'
+      fullPath: '/dashboard/jogador'
+      preLoaderRoute: typeof DashboardJogadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clube/$id': {
+      id: '/clube/$id'
+      path: '/clube/$id'
+      fullPath: '/clube/$id'
+      preLoaderRoute: typeof ClubeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DescobrirRoute: DescobrirRoute,
+  PrecosRoute: PrecosRoute,
+  ClubeIdRoute: ClubeIdRoute,
+  DashboardJogadorRoute: DashboardJogadorRoute,
+  DashboardScoutRoute: DashboardScoutRoute,
+  JogadorIdRoute: JogadorIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
