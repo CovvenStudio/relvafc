@@ -95,7 +95,7 @@ function PlayerPage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
         <h2 className="text-display text-2xl mb-4">Linha do tempo</h2>
         <div className="relative pl-6 border-l-2 border-gold/30 space-y-5">
-          {player.history.map((h, i) => (
+          {player.history.map((h: { club: string; years: string }, i: number) => (
             <div key={i} className="relative">
               <div className="absolute -left-[31px] top-1 h-4 w-4 rounded-full bg-gold-gradient border-2 border-background" />
               <div className="flex items-center gap-2 text-sm text-muted-foreground"><Calendar className="h-3.5 w-3.5" />{h.years}</div>
@@ -109,7 +109,7 @@ function PlayerPage() {
       <section className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
         <h2 className="text-display text-2xl mb-4">Vídeos highlights</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {player.videos.map((v, i) => (
+          {player.videos.map((v: { title: string; thumb: string }, i: number) => (
             <button key={i} className="group relative aspect-video overflow-hidden rounded-xl border border-white/10">
               <img src={v.thumb} alt={v.title} className="h-full w-full object-cover transition group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition flex items-center justify-center">
