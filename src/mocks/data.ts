@@ -252,7 +252,7 @@ function makeCareer(history: { club: string; years: string }[], badges: string[]
 
 const tags: VideoTag["tag"][] = ["Golo", "Assistência", "Drible", "Defesa", "Livre"];
 
-function makeVideos(base: { title: string; thumb: string }[], seed: number): PlayerVideo[] {
+function makeVideos(base: { title: string; thumb: string; tag: VideoTag["tag"] }[], seed: number): PlayerVideo[] {
   const r = rng(seed);
   return base.map((v, i) => ({
     ...v,
