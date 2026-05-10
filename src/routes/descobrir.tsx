@@ -8,7 +8,7 @@ import { LayoutGrid, List, SlidersHorizontal } from "lucide-react";
 export const Route = createFileRoute("/descobrir")({
   head: () => ({
     meta: [
-      { title: "Descobrir Jogadores — RelvaFC" },
+      { title: "Descobrir Jogadores — ProFootPlay" },
       { name: "description", content: "Filtra por posição, divisão, distrito e disponibilidade. Encontra talento em todas as ligas portuguesas." },
     ],
   }),
