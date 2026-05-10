@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PrecosRouteImport } from './routes/precos'
 import { Route as DescobrirRouteImport } from './routes/descobrir'
+import { Route as CompararRouteImport } from './routes/comparar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as JogadorIdRouteImport } from './routes/jogador.$id'
 import { Route as DashboardScoutRouteImport } from './routes/dashboard.scout'
@@ -25,6 +26,11 @@ const PrecosRoute = PrecosRouteImport.update({
 const DescobrirRoute = DescobrirRouteImport.update({
   id: '/descobrir',
   path: '/descobrir',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompararRoute = CompararRouteImport.update({
+  id: '/comparar',
+  path: '/comparar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,6 +61,7 @@ const ClubeIdRoute = ClubeIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/comparar': typeof CompararRoute
   '/descobrir': typeof DescobrirRoute
   '/precos': typeof PrecosRoute
   '/clube/$id': typeof ClubeIdRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/comparar': typeof CompararRoute
   '/descobrir': typeof DescobrirRoute
   '/precos': typeof PrecosRoute
   '/clube/$id': typeof ClubeIdRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/comparar': typeof CompararRoute
   '/descobrir': typeof DescobrirRoute
   '/precos': typeof PrecosRoute
   '/clube/$id': typeof ClubeIdRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/comparar'
     | '/descobrir'
     | '/precos'
     | '/clube/$id'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/comparar'
     | '/descobrir'
     | '/precos'
     | '/clube/$id'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/comparar'
     | '/descobrir'
     | '/precos'
     | '/clube/$id'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CompararRoute: typeof CompararRoute
   DescobrirRoute: typeof DescobrirRoute
   PrecosRoute: typeof PrecosRoute
   ClubeIdRoute: typeof ClubeIdRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/descobrir'
       fullPath: '/descobrir'
       preLoaderRoute: typeof DescobrirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comparar': {
+      id: '/comparar'
+      path: '/comparar'
+      fullPath: '/comparar'
+      preLoaderRoute: typeof CompararRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CompararRoute: CompararRoute,
   DescobrirRoute: DescobrirRoute,
   PrecosRoute: PrecosRoute,
   ClubeIdRoute: ClubeIdRoute,

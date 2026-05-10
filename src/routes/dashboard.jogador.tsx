@@ -1,18 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Eye, Video, Activity, Sparkles, ChevronRight } from "lucide-react";
-import { PremiumLock } from "@/components/PremiumLock";
-import { players } from "@/mocks/data";
+import { Eye, Video, Activity, Sparkles, ChevronRight, Check, X, Lock } from "lucide-react";
+import { players, profileViewers } from "@/mocks/data";
 
 export const Route = createFileRoute("/dashboard/jogador")({
-  head: () => ({ meta: [{ title: "Dashboard Jogador — RelvaFC" }, { name: "description", content: "Gere o teu perfil, vídeos e disponibilidade." }] }),
+  head: () => ({ meta: [{ title: "Dashboard Jogador — ProFootPlay" }, { name: "description", content: "Gere o teu perfil, vídeos e disponibilidade." }] }),
   component: PlayerDashboard,
 });
 
 function PlayerDashboard() {
   const me = players[0];
-  const progress = 72;
 
-  // fake last 30 days visits
+  const checklist = [
+    { label: "Foto de perfil", done: true },
+    { label: "Clube atual", done: true },
+    { label: "Estatísticas", done: true },
+    { label: "Vídeo highlights", done: me.videos.length >= 2 },
+    { label: "Disponibilidade", done: true },
+    { label: "Historial completo", done: false },
+  ];
+  const done = checklist.filter((c) => c.done).length;
+  const progress = Math.round((done / checklist.length) * 100);
+
   const visits = Array.from({ length: 30 }, (_, i) => Math.round(8 + Math.sin(i * 0.6) * 5 + Math.random() * 6));
   const max = Math.max(...visits);
 
@@ -22,36 +30,58 @@ function PlayerDashboard() {
         <div>
           <div className="text-display text-gold text-sm tracking-widest">JOGADOR</div>
           <h1 className="text-display text-4xl mt-1">Olá, {me.name.split(" ")[0]}.</h1>
-          <p className="text-sm text-muted-foreground mt-1">relvafc.pt/jogador/<span className="text-gold">{me.slug}</span></p>
+          <p className="text-sm text-muted-foreground mt-1">profootplay.pt/jogador/<span className="text-gold">{me.slug}</span></p>
         </div>
         <Link to="/jogador/$id" params={{ id: me.slug }} className="rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 px-4 py-2 text-sm font-bold">Ver perfil público</Link>
       </div>
 
-      {/* Progress */}
+      {/* Profile completion */}
       <div className="rounded-2xl border border-gold/20 bg-card-blur p-5 mb-6">
         <div className="flex items-center justify-between mb-2">
-          <div className="text-display text-lg">Perfil completo</div>
-          <div className="text-display text-2xl text-gold">{progress}%</div>
+          <div>
+            <div className="text-display text-lg">Completa o teu perfil para aparecer em mais pesquisas</div>
+            <div className="text-xs text-muted-foreground">Cada item completo = mais visibilidade</div>
+          </div>
+          <div className="text-display text-3xl text-gold">{progress}%</div>
         </div>
         <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-          <div className="h-full bg-gold-gradient" style={{ width: `${progress}%` }} />
+          <div className="h-full bg-gold-gradient transition-all" style={{ width: `${progress}%` }} />
         </div>
-        <div className="mt-2 text-xs text-muted-foreground">Adiciona mais 2 vídeos e clube anterior para chegar a 100%.</div>
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2">
+          {checklist.map((c) => (
+            <div key={c.label} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${c.done ? "border-green-500/30 bg-green-500/5" : "border-white/10 bg-white/5"}`}>
+              {c.done ? <Check className="h-4 w-4 text-green-400" /> : <X className="h-4 w-4 text-muted-foreground" />}
+              <span className={c.done ? "" : "text-muted-foreground"}>{c.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Visitors (premium) */}
-        <div className="relative lg:col-span-2 rounded-2xl border border-white/10 bg-card-blur p-5 min-h-[260px]">
-          <div className="flex items-center gap-2 mb-3"><Eye className="h-4 w-4 text-gold" /><h2 className="text-display text-xl">Quem visitou o teu perfil esta semana</h2></div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 blur-sm pointer-events-none select-none">
-            {[1,2,3,4,5,6].map((i) => (
-              <div key={i} className="rounded-xl border border-white/10 p-3 flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-white/10" />
-                <div><div className="font-semibold">Scout #{i}</div><div className="text-xs text-muted-foreground">Sporting CP</div></div>
+        {/* Who viewed (premium) */}
+        <div className="relative lg:col-span-2 rounded-2xl border border-white/10 bg-card-blur p-5 min-h-[280px] overflow-hidden">
+          <div className="flex items-center gap-2 mb-3"><Eye className="h-4 w-4 text-gold" /><h2 className="text-display text-xl">Quem viu o teu perfil esta semana</h2></div>
+          <div className="text-sm text-muted-foreground mb-4">{profileViewers.length} scouts viram o teu perfil esta semana</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 blur-sm pointer-events-none select-none">
+            {profileViewers.map((v, i) => (
+              <div key={i} className="rounded-xl border border-white/10 p-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-10 w-10 rounded-lg bg-gold-gradient flex items-center justify-center text-background font-black">{v.name[0]}</div>
+                  <div>
+                    <div className="font-semibold text-sm">{v.name}</div>
+                    <div className="text-[11px] text-muted-foreground">{v.org}</div>
+                  </div>
+                </div>
+                <div className="mt-2 text-[11px] text-muted-foreground">{v.role} · {v.date}</div>
               </div>
             ))}
           </div>
-          <PremiumLock label="Sabe quem te está a ver" sub="Premium · €4/mês" />
+          <div className="absolute inset-0 bg-background/40 backdrop-blur-[2px] flex flex-col items-center justify-center text-center p-6">
+            <div className="h-12 w-12 rounded-full bg-gold-gradient flex items-center justify-center text-background mb-3 glow-gold"><Lock className="h-5 w-5" /></div>
+            <div className="text-display text-2xl">Desbloqueia para ver quem te está a ver</div>
+            <div className="text-sm text-muted-foreground mt-1">Premium · €4/mês</div>
+            <Link to="/precos" className="mt-3 inline-flex rounded-lg bg-gold-gradient text-background px-4 py-2 text-sm font-bold">Upgrade Premium</Link>
+          </div>
         </div>
 
         {/* Visits chart */}
@@ -69,7 +99,7 @@ function PlayerDashboard() {
 
       {/* Quick edit */}
       <div className="grid md:grid-cols-3 gap-4 mt-6">
-        <QuickEdit title="Estatísticas" desc="14 golos · 5 assist · 24 jogos" />
+        <QuickEdit title="Estatísticas" desc={`${me.goals} golos · ${me.assists} assist · ${me.matches} jogos`} />
         <QuickEdit title="Vídeos" desc={`${me.videos.length} vídeos · adiciona mais`} icon={<Video className="h-4 w-4" />} />
         <QuickEdit title="Disponibilidade" desc="Disponível para propostas" />
       </div>

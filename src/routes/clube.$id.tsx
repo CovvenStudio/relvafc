@@ -12,7 +12,7 @@ export const Route = createFileRoute("/clube/$id")({
   },
   head: ({ loaderData }) => ({
     meta: loaderData ? [
-      { title: `${loaderData.club.name} — RelvaFC` },
+      { title: `${loaderData.club.name} — ProFootPlay` },
       { name: "description", content: `Plantel, jogadores e divisão de ${loaderData.club.name}, ${loaderData.club.city}.` },
       { property: "og:title", content: loaderData.club.name },
       { property: "og:description", content: `${loaderData.club.division} · ${loaderData.club.city}` },

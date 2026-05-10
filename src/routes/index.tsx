@@ -7,7 +7,7 @@ import { PlayerCard } from "@/components/PlayerCard";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "RelvaFC — Uma relva. Milhares de histórias." },
+      { title: "ProFootPlay — Uma relva. Milhares de histórias." },
       { name: "description", content: "Descobre jogadores, clubes e talento do futebol português em todas as divisões." },
     ],
   }),
@@ -51,7 +51,7 @@ function Index() {
             <span className="bg-gradient-to-r from-gold to-yellow-500 bg-clip-text text-transparent">Milhares de histórias.</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg text-white/70">
-            Do Campeonato Nacional aos distritais. RelvaFC liga jogadores, clubes, scouts e agentes em todas as divisões do futebol português.
+            Do Campeonato Nacional aos distritais. ProFootPlay liga jogadores, clubes, scouts e agentes em todas as divisões do futebol português.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/dashboard/jogador" className="inline-flex items-center gap-2 rounded-lg bg-gold-gradient text-background px-5 py-3 text-sm font-bold hover:opacity-90 glow-gold">

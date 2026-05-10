@@ -4,9 +4,9 @@ import { Check, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/precos")({
   head: () => ({
     meta: [
-      { title: "Preços — RelvaFC" },
+      { title: "Preços — ProFootPlay" },
       { name: "description", content: "Planos para jogadores, scouts, agentes e clubes." },
-      { property: "og:title", content: "Preços RelvaFC" },
+      { property: "og:title", content: "Preços ProFootPlay" },
     ],
   }),
   component: Pricing,
